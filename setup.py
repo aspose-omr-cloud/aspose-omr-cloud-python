@@ -27,8 +27,8 @@ limitations under the License.
 import sys
 from setuptools import setup, find_packages
 
-NAME = "asposeomrcloud"
-VERSION = "1.0.0"
+NAME = "aspose-omr-cloud"
+VERSION = "18.8.0"
 # To install the library, run the following
 #
 # python setup.py install
@@ -41,14 +41,40 @@ REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil"]
 setup(
     name=NAME,
     version=VERSION,
-    description="Aspose.OMR for Cloud API Reference",
-    author_email="",
-    url="https://products.aspose.cloud/omr/cloud",
-    keywords=["Swagger", "Aspose.OMR for Cloud API Reference"],
+    description="Python library for communicating with the Aspose.OMR Cloud API",
+	author="Aspose Pty Ltd",
+    author_email="aspose.cloud@asposeptyltd.com",
+    url="https://github.com/aspose-omr-cloud/aspose-omr-cloud-python",
+    keywords=["aspose", "aspose cloud", "omr"],
+	license="MIT",
     install_requires=REQUIRES,
     packages=find_packages(),
     include_package_data=True,
+	classifiers=[
+		# How mature is this project? Common values are
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        'Development Status :: 5 - Production/Stable',
+		
+		 # Indicate who your project is intended for
+        'Intended Audience :: Developers',
+		
+		# Specify the Python versions you support here. In particular, ensure
+        # that you indicate whether you support Python 2, Python 3 or both.
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+		
+		'Topic :: Software Development :: Libraries',
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
     long_description="""\
-    Aspose.OMR for Cloud helps performing optical mark recognition in the cloud
+    Aspose.OMR for Cloud is a REST API that helps you to perform optical mark recognition in the cloud. We provide a series of SDKs. Along with that, you can get binaries to start working immediately and recognize various OMR forms.
+
+Developers can embed optical recognition in any type of application to extract data from images of tests, exams, questionnaires, surveys, etc. In the repository you can find examples on how to start using Aspose.OMR API in your project.
     """
 )

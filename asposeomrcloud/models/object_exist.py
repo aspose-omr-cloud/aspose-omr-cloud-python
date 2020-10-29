@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="payload.py">
+# <copyright company="Aspose" file="object_exist.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -30,48 +30,78 @@
 from asposeomrcloud.models import BaseModel
 
 
-class Payload(BaseModel):
+class ObjectExist(BaseModel):
     """
     Attributes:
-        model_types (dict):   The key is attribute name
+      model_types (dict):   The key is attribute name
                             and the value is attribute type.
-        attribute_map (dict): The key is attribute name
+      attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
     model_types = {
-        'result': 'OmrResponseContent'
+        'exists': 'bool',
+        'is_folder': 'bool'
     }
 
     attribute_map = {
-        'result': 'result'
+        'exists': 'exists',
+        'is_folder': 'isFolder'
     }
 
-    def __init__(self, result=None):
+    def __init__(self, exists=None, is_folder=None):
 
-        self._result = None
-        self.result = result
+        self._exists = None
+        self._is_folder = None
+
+        self.exists = exists
+        self.is_folder = is_folder
 
     @property
-    def result(self):
-        """
-        Gets the result of this Payload.
-        OMR result
+    def exists(self):
+        """Gets the exists of this ObjectExist.
 
-        :return: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        return self._result
+        Indicates that the file or folder exists.
 
-    @result.setter
-    def result(self, result):
+        :return: The exists of this ObjectExist.
+        :rtype: bool
         """
-        Sets the result of this Payload.
-        OMR result
-        
-        :param result: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        if result is None:
-            raise ValueError("Invalid value for `result`, must not be `None`")
+        return self._exists
 
-        self._result = result
+    @exists.setter
+    def exists(self, exists):
+        """Sets the exists of this ObjectExist.
+
+        Indicates that the file or folder exists.
+
+        :param exists: The exists of this ObjectExist.
+        :type: bool
+        """
+        if exists is None:
+            raise ValueError("Invalid value for `exists`, must not be `None`")
+
+        self._exists = exists
+
+    @property
+    def is_folder(self):
+        """Gets the is_folder of this ObjectExist.
+
+        True if it is a folder, false if it is a file.
+
+        :return: The is_folder of this ObjectExist.
+        :rtype: bool
+        """
+        return self._is_folder
+
+    @is_folder.setter
+    def is_folder(self, is_folder):
+        """Sets the is_folder of this ObjectExist.
+
+        True if it is a folder, false if it is a file.
+
+        :param is_folder: The is_folder of this ObjectExist.
+        :type: bool
+        """
+        if is_folder is None:
+            raise ValueError("Invalid value for `is_folder`, must not be `None`")
+
+        self._is_folder = is_folder

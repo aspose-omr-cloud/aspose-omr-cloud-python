@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="payload.py">
+# <copyright company="Aspose" file="files_upload_result.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -30,48 +30,76 @@
 from asposeomrcloud.models import BaseModel
 
 
-class Payload(BaseModel):
+class FilesUploadResult(BaseModel):
     """
     Attributes:
-        model_types (dict):   The key is attribute name
+      model_types (dict):   The key is attribute name
                             and the value is attribute type.
-        attribute_map (dict): The key is attribute name
+      attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
     model_types = {
-        'result': 'OmrResponseContent'
+        'uploaded': 'list[str]',
+        'errors': 'list[Error]'
     }
 
     attribute_map = {
-        'result': 'result'
+        'uploaded': 'uploaded',
+        'errors': 'errors'
     }
 
-    def __init__(self, result=None):
+    def __init__(self, uploaded=None, errors=None):
 
-        self._result = None
-        self.result = result
+        self._uploaded = None
+        self._errors = None
+
+        if uploaded is not None:
+            self.uploaded = uploaded
+        if errors is not None:
+            self.errors = errors
 
     @property
-    def result(self):
-        """
-        Gets the result of this Payload.
-        OMR result
+    def uploaded(self):
+        """Gets the uploaded of this FilesUploadResult.
 
-        :return: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        return self._result
+        List of uploaded file names
 
-    @result.setter
-    def result(self, result):
+        :return: The uploaded of this FilesUploadResult.
+        :rtype: list[str]
         """
-        Sets the result of this Payload.
-        OMR result
-        
-        :param result: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        if result is None:
-            raise ValueError("Invalid value for `result`, must not be `None`")
+        return self._uploaded
 
-        self._result = result
+    @uploaded.setter
+    def uploaded(self, uploaded):
+        """Sets the uploaded of this FilesUploadResult.
+
+        List of uploaded file names
+
+        :param uploaded: The uploaded of this FilesUploadResult.
+        :type: list[str]
+        """
+
+        self._uploaded = uploaded
+
+    @property
+    def errors(self):
+        """Gets the errors of this FilesUploadResult.
+
+        List of errors.
+
+        :return: The errors of this FilesUploadResult.
+        :rtype: list[Error]
+        """
+        return self._errors
+
+    @errors.setter
+    def errors(self, errors):
+        """Sets the errors of this FilesUploadResult.
+
+        List of errors.
+
+        :param errors: The errors of this FilesUploadResult.
+        :type: list[Error]
+        """
+
+        self._errors = errors

@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="__init__.py">
+# <copyright company="Aspose" file="omr_error_responce.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -27,7 +27,48 @@
 # --------------------------------------------------------------------------------------------------------------------
 # """
 
-from __future__ import absolute_import
+from asposeomrcloud.models import BaseModel
 
-from asposeomrcloud.api_client import ApiClient
-from asposeomrcloud.configuration import Configuration
+
+class OmrErrorResponse(BaseModel):
+    """
+    Attributes:
+        model_types (dict): The key is attribute name
+                            and the value is attribute type.
+        attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'message': 'str',
+    }
+
+    attribute_map = {
+        'message': 'message',
+    }
+
+    def __init__(self, message=None):
+        self._message = None
+
+        if message is not None:
+            self.message = message
+
+    @property
+    def message(self):
+        """
+        Gets the message of this OmrErrorResponse.
+        Integer field that indicates whether any critical errors occured during task execution
+        :return: The message of this OmrErrorResponse.
+        :rtype: str
+        """
+        return self._message
+
+    @message.setter
+    def error_code(self, message):
+        """
+        Sets the message of this OmrErrorResponse.
+        Integer field that indicates whether any critical errors occured during task execution
+        :param message: The message of this OmrErrorResponse.
+        :type: str
+        """
+
+        self._message = message

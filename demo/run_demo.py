@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="__init__.py">
+# <copyright company="Aspose" file="run_demo.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -26,8 +26,17 @@
 # </summary>
 # --------------------------------------------------------------------------------------------------------------------
 # """
+from __future__ import absolute_import, unicode_literals
+from demo.omr_demo import run_demo
 
-from __future__ import absolute_import
 
-from asposeomrcloud.api_client import ApiClient
-from asposeomrcloud.configuration import Configuration
+def demo():
+    try:
+        run_demo()
+
+    except Exception as err:
+        print('Exception:', err)
+
+
+if __name__ == '__main__':
+    demo()

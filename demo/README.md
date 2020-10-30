@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* You need to complete [installation](https://github.com/aspose-omr-cloud/aspose-omr-cloud-demo-data#installation) procedure
+* You need to complete [installation](https://github.com/aspose-omr-cloud/aspose-omr-cloud-python/blob/master/readme.md#quickstart) procedure
 * install `aspose-omr-cloud`
 
 ```sh

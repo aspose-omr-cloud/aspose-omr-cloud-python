@@ -129,6 +129,3 @@ Aspose Pty Ltd (https://www.aspose.com)
 + **Cloud Dashboard:** [Aspose Cloud](https://dashboard.aspose.cloud/)
 + **Forum:** [Aspose.OMR for Cloud Forum](https://forum.aspose.cloud/c/omr)
 + **PyPi:** [Aspose.OMR-Cloud](https://pypi.org/project/aspose-omr-cloud/)
-
-
-

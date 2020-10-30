@@ -97,8 +97,8 @@ _________________________
 
 ## OMR Cloud SDKs
 
-||||||||||
-|--------------|----------|-------|-------|-------|---------|---------|----------|-------|
+||||||||
+|--------------|----------|-------|-------|-------|---------|---------|
 |[.NET](https://github.com/aspose-omr-cloud/aspose-omr-cloud-dotnet)|[Java](https://github.com/aspose-omr-cloud/aspose-omr-cloud-java)|[PHP](https://github.com/aspose-omr-cloud/aspose-omr-cloud-php)|[Ruby](https://github.com/aspose-omr-cloud/aspose-omr-cloud-ruby)|[Python](https://github.com/aspose-omr-cloud/aspose-omr-cloud-python)|[Node.js](https://github.com/aspose-omr-cloud/aspose-omr-cloud-nodejs)|[Perl](https://github.com/aspose-omr-cloud/aspose-omr-cloud-perl)
 
 ## Documentation for API Endpoints

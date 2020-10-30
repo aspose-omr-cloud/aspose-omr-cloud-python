@@ -51,7 +51,7 @@ Make your solution using [SDK](https://github.com/aspose-omr-cloud), follow thes
 
 #### 1. Clone from Github
 
-Clone the solution using the command: `git@github.com:aspose-omr-cloud/aspose-omr-cloud-python.git --recurse-submodules`
+Clone the solution using the command: `git clone git@github.com:aspose-omr-cloud/aspose-omr-cloud-python.git --recurse-submodules`
 
 #### 2. Get API keys if you haven't
 

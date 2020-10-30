@@ -47,14 +47,17 @@ _________________________
 
 
 ## Quickstart
-
 Make your solution using [SDK](https://github.com/aspose-omr-cloud), follow these steps:
 
-#### 1. Get API keys if you haven't
+#### 1. Clone from Github
+
+Clone the solution using the command: `git@github.com:aspose-omr-cloud/aspose-omr-cloud-python.git --recurse-submodules`
+
+#### 2. Get API keys if you haven't
 
 Make a personal account on [Aspose Cloud Dashboard](https://dashboard.aspose.cloud/#/) and click _Get Keys_. These keys are useful for all OMR Cloud products. If you have any trouble, look at this [detailed manual](https://docs.aspose.cloud/omr/quickstart/).
 
-#### 2. Install SDK
+#### 3. Install SDK
 
 Install `aspose-omr-cloud` with [PIP](https://pypi.org/project/pip/) from [PyPI](https://pypi.org/) by:
 
@@ -68,7 +71,7 @@ Or clone repository and install it via [Setuptools](http://pypi.python.org/pypi/
 python setup.py install
 ```
 
-#### 3. Run Demo
+#### 4. Run Demo
 
   * Checkout the SDK or get from PyPi 
   * Set Your AppSid & AppKey
@@ -117,6 +120,15 @@ Library uses OAUTH2 internally
 ## Author
 
 Aspose Pty Ltd (https://www.aspose.com)
+
+## Resources
+
++ **Website:** [www.aspose.com](https://www.aspose.com/)
++ **Product Home:** [Aspose.OMR for Cloud](https://products.aspose.cloud/omr)
++ **Documentation:** [Aspose.OMR for Cloud Documentation](https://docs.aspose.cloud/omr/)
++ **Cloud Dashboard:** [Aspose Cloud](https://dashboard.aspose.cloud/)
++ **Forum:** [Aspose.OMR for Cloud Forum](https://forum.aspose.cloud/c/omr)
++ **PyPi:** [Aspose.OMR-Cloud](https://pypi.org/project/aspose-omr-cloud/)
 
 
 

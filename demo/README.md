@@ -3,10 +3,10 @@
 ## Requirements
 
 * You need to complete [installation](https://github.com/aspose-omr-cloud/aspose-omr-cloud-demo-data#installation) procedure
-* install `asposestoragecloud`
+* install `aspose-omr-cloud`
 
 ```sh
-pip install asposestoragecloud
+pip install aspose-omr-cloud
 ```
 
 ## Running OMR Demo
@@ -14,6 +14,5 @@ pip install asposestoragecloud
 To run OMR Demo just execute
 
 ```sh
-python omr_demo.py
+python run_demo.py
 ```
-

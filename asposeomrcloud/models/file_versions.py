@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="__init__.py">
+# <copyright company="Aspose" file="file_versions.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -27,7 +27,50 @@
 # --------------------------------------------------------------------------------------------------------------------
 # """
 
-from __future__ import absolute_import
+from asposeomrcloud.models import BaseModel
 
-from asposeomrcloud.api_client import ApiClient
-from asposeomrcloud.configuration import Configuration
+
+class FileVersions(BaseModel):
+
+    """
+    Attributes:
+      model_types (dict):   The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'value': 'list[FileVersion]'
+    }
+
+    attribute_map = {
+        'value': 'value'
+    }
+
+    def __init__(self, value=None):
+        self._value = None
+        if value is not None:
+            self.value = value
+
+    @property
+    def value(self):
+        """Gets the value of this FileVersions.
+
+        File versions FileVersion.
+
+        :return: The value of this FileVersions.
+        :type: list[FileVersion]
+        """
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        """Sets the value of this FileVersions.
+
+        File versions FileVersion.
+
+        :param value: The value of this FileVersions.
+        :type: list[FileVersion]
+        """
+
+        self._value = value

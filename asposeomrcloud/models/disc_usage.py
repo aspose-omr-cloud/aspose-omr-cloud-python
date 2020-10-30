@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="payload.py">
+# <copyright company="Aspose" file="disc_usage.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -30,48 +30,79 @@
 from asposeomrcloud.models import BaseModel
 
 
-class Payload(BaseModel):
+class DiscUsage(BaseModel):
+
     """
     Attributes:
-        model_types (dict):   The key is attribute name
+      model_types (dict):   The key is attribute name
                             and the value is attribute type.
-        attribute_map (dict): The key is attribute name
+      attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
     model_types = {
-        'result': 'OmrResponseContent'
+        'used_size': 'long',
+        'total_size': 'long'
     }
 
     attribute_map = {
-        'result': 'result'
+        'used_size': 'usedSize',
+        'total_size': 'totalSize'
     }
 
-    def __init__(self, result=None):
+    def __init__(self, used_size=None, total_size=None):
 
-        self._result = None
-        self.result = result
+        self._used_size = None
+        self._total_size = None
+
+        self.used_size = used_size
+        self.total_size = total_size
 
     @property
-    def result(self):
-        """
-        Gets the result of this Payload.
-        OMR result
+    def used_size(self):
+        """Gets the used_size of this DiscUsage.
 
-        :return: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        return self._result
+        Application used disc space.
 
-    @result.setter
-    def result(self, result):
+        :return: The used_size of this DiscUsage.
+        :rtype: long
         """
-        Sets the result of this Payload.
-        OMR result
-        
-        :param result: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        if result is None:
-            raise ValueError("Invalid value for `result`, must not be `None`")
+        return self._used_size
 
-        self._result = result
+    @used_size.setter
+    def used_size(self, used_size):
+        """Sets the used_size of this DiscUsage.
+
+        Application used disc space.
+
+        :param used_size: The used_size of this DiscUsage.
+        :type: long
+        """
+        if used_size is None:
+            raise ValueError("Invalid value for `used_size`, must not be `None`")
+
+        self._used_size = used_size
+
+    @property
+    def total_size(self):
+        """Gets the total_size of this DiscUsage.
+
+        Total disc space.
+
+        :return: The total_size of this DiscUsage.
+        :rtype: long
+        """
+        return self._total_size
+
+    @total_size.setter
+    def total_size(self, total_size):
+        """Sets the total_size of this DiscUsage.
+
+        Total disc space.
+
+        :param total_size: The total_size of this DiscUsage.
+        :type: long
+        """
+        if total_size is None:
+            raise ValueError("Invalid value for `total_size`, must not be `None`")
+
+        self._total_size = total_size

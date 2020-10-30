@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="__init__.py">
+# <copyright company="Aspose" file="files_list.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -27,7 +27,51 @@
 # --------------------------------------------------------------------------------------------------------------------
 # """
 
-from __future__ import absolute_import
+from asposeomrcloud.models import BaseModel
 
-from asposeomrcloud.api_client import ApiClient
-from asposeomrcloud.configuration import Configuration
+
+class FilesList(BaseModel):
+    """
+    Attributes:
+      model_types (dict):   The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'value': 'list[StorageFile]'
+    }
+
+    attribute_map = {
+        'value': 'value'
+    }
+
+    def __init__(self, value=None):
+
+        self._value = None
+
+        if value is not None:
+            self.value = value
+
+    @property
+    def value(self):
+        """Gets the value of this FilesList.
+
+        Files and folders contained by folder StorageFile.
+
+        :return: The value of this FilesList.
+        :rtype: list[StorageFile]
+        """
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        """Sets the value of this FilesList.
+
+        Files and folders contained by folder StorageFile.
+
+        :param value: The value of this FilesList.
+        :type: list[StorageFile]
+        """
+
+        self._value = value

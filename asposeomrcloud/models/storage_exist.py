@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="__init__.py">
+# <copyright company="Aspose" file="storage_exist.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -27,7 +27,51 @@
 # --------------------------------------------------------------------------------------------------------------------
 # """
 
-from __future__ import absolute_import
+from asposeomrcloud.models import BaseModel
 
-from asposeomrcloud.api_client import ApiClient
-from asposeomrcloud.configuration import Configuration
+
+class StorageExist(BaseModel):
+    """
+    Attributes:
+        model_types (dict):   The key is attribute name
+                            and the value is attribute type.
+        attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'exists': 'bool'
+    }
+
+    attribute_map = {
+        'exists': 'exists'
+    }
+
+    def __init__(self, exists=None):
+
+        self._exists = None
+        self.exists = exists
+
+    @property
+    def exists(self):
+        """Gets the exists of this StorageExist.
+
+        Shows that the storage exists.
+
+        :return: The exists of this StorageExist.
+        :rtype: bool
+        """
+        return self._exists
+
+    @exists.setter
+    def exists(self, exists):
+        """Sets the exists of this StorageExist.
+
+        Shows that the storage exists.
+
+        :param exists: The exists of this StorageExist.
+        :type: bool
+        """
+        if exists is None:
+            raise ValueError("Invalid value for `exists`, must not be `None`")
+
+        self._exists = exists

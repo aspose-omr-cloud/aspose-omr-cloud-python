@@ -1,7 +1,7 @@
 # coding: utf-8
 # """Copyright
 # --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="payload.py">
+# <copyright company="Aspose" file="error_details.py">
 # Copyright (c) 2020 Aspose.OMR for Cloud
 # </copyright>
 # <summary>
@@ -30,48 +30,77 @@
 from asposeomrcloud.models import BaseModel
 
 
-class Payload(BaseModel):
+class ErrorDetails(BaseModel):
     """
     Attributes:
-        model_types (dict):   The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
-        attribute_map (dict): The key is attribute name
+      attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
     model_types = {
-        'result': 'OmrResponseContent'
+        'request_id': 'str',
+        '_date': 'datetime'
     }
 
     attribute_map = {
-        'result': 'result'
+        'request_id': 'requestId',
+        '_date': 'date'
     }
 
-    def __init__(self, result=None):
+    def __init__(self, request_id=None, _date=None):
 
-        self._result = None
-        self.result = result
+        self._request_id = None
+        self.__date = None
+
+        if request_id is not None:
+            self.request_id = request_id
+        self._date = _date
 
     @property
-    def result(self):
-        """
-        Gets the result of this Payload.
-        OMR result
+    def request_id(self):
+        """Gets the request_id of this ErrorDetails.
 
-        :return: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        return self._result
+        The request id
 
-    @result.setter
-    def result(self, result):
+        :return: The request_id of this ErrorDetails.
+        :rtype: str
         """
-        Sets the result of this Payload.
-        OMR result
-        
-        :param result: The result of this Payload.
-        :type: OmrResponseContent
-        """
-        if result is None:
-            raise ValueError("Invalid value for `result`, must not be `None`")
+        return self._request_id
 
-        self._result = result
+    @request_id.setter
+    def request_id(self, request_id):
+        """Sets the request_id of this ErrorDetails.
+
+        The request id
+
+        :param request_id: The request_id of this ErrorDetails.
+        :type: str
+        """
+
+        self._request_id = request_id
+
+    @property
+    def _date(self):
+        """Gets the _date of this ErrorDetails.
+
+        Date
+
+        :return: The _date of this ErrorDetails.
+        :rtype: datetime
+        """
+        return self.__date
+
+    @_date.setter
+    def _date(self, _date):
+        """Sets the _date of this ErrorDetails.
+
+        Date
+
+        :param _date: The _date of this ErrorDetails.
+        :type: datetime
+        """
+        if _date is None:
+            raise ValueError("Invalid value for `_date`, must not be `None`")
+
+        self.__date = _date

@@ -49,8 +49,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
 
-        'Topic :: Software Development :: Libraries',
-        "License :: OSI Approved :: MIT License",
+        'Topic :: Software Development :: Libraries :: Python Modules',
         "Operating System :: OS Independent"
     ],
     keywords=["Aspose.OMR Cloud API Reference", "Aspose", "OMR", "OMR Cloud"],

@@ -10,8 +10,7 @@ Developers can embed optical recognition in any type of application to extract d
 The repository contains data and configuration file that are used in OMR SDK's demo projects. Each platform SDK has such simple project that demonstrates main Aspose.OMR functionality.
 
 ## Installation
-- Create your personal configuration file by copying [test_config_sample.json](https://github.com/aspose-omr-cloud/aspose-omr-cloud-demo-data/blob/master/test_config_sample.json "test_config_sample.json")  file under the name **test_config.json.**
-- Edit this file providing your **app_key** and **app_sid** keys, which you can receive by registering at Aspose Cloud Dashboard (https://dashboard.aspose.cloud/) 
+- Edit [test_config.json] providing your **app_key** and **app_sid** keys, which you can receive by registering at Aspose Cloud Dashboard (https://dashboard.aspose.cloud/) 
 - **data_folder** value specifies relative path to the [Data](https://github.com/aspose-omr-cloud/aspose-omr-cloud-demo-data/tree/master/Data "Data") folder that contains files used to run OMR demos. You can leave default value if you follow repository structure and [Data](https://github.com/aspose-omr-cloud/aspose-omr-cloud-demo-data/tree/master/Data "Data") folder is located at the same level as **test_config.json.**
 - We strongly recommend not to share **test_config.json** file and keep it out of source control, since it contains your credentials for working with Aspose Cloud products.
 

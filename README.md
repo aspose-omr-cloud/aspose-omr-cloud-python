@@ -1,9 +1,29 @@
-# Aspose.OMR for Cloud
+![](https://img.shields.io/badge/api-v3.0-lightgrey) ![PyPI](https://img.shields.io/pypi/v/aspose-omr-cloud) ![PyPI - Format](https://img.shields.io/pypi/format/aspose-omr-cloud) ![PyPI - Downloads](https://img.shields.io/pypi/dm/aspose-omr-cloud) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aspose-omr-cloud) [![GitHub license](https://img.shields.io/github/license/aspose-omr-cloud/aspose-omr-cloud-python)](https://github.com/aspose-omr-cloud/aspose-omr-cloud-php/blob/master/LICENSE) ![GitHub last commit](https://img.shields.io/github/last-commit/Aspose-omr-Cloud/aspose-omr-cloud-python)
 
-[Aspose.OMR for Cloud](https://products.aspose.cloud/omr/) is a REST API that helps you to perform optical mark recognition in the cloud. We provide a series of [SDKs](https://github.com/aspose-omr-cloud). Along with that, you can get `binaries` to start working immediately and recognize various OMR forms.
+# Python REST API for OMR Processing
+[Aspose.OMR for Cloud](https://products.aspose.cloud/omr/) is a REST API that helps you to perform optical mark recognition in the cloud. We provide a series of [SDKs](https://github.com/aspose-omr-cloud). Along with that, you can get [binaries](https://github.com/aspose-omr-cloud/aspose-omr-cloud-dotnet/releases) to start working immediately and recognize various OMR forms.
 
 Developers can embed [optical recognition](https://en.wikipedia.org/wiki/Optical_mark_recognition) in any type of application to extract data from images of tests, exams, questionnaires, surveys, etc. In the repository you can find examples on how to start using [Aspose.OMR API](https://docs.aspose.cloud/omr/omr-api-specification/) in your project.
 
+## OMR Processing Features
+
+- Perform recognition of scanned photos and images for OMR operations.
+- Ability to perform OMR on rotated & perspective (within 25 deg) photos.
+- Extract & recognize human-marked data from scanned tests, exams, surveys, etc.
+- Supports the export of OMR results to CSV file format.
+- Use textual markup to generate OMR templates, generate surveys, and test sheets.
+- Availability of GUI application for managing OMR templates.
+- Specify the number of OMR based questions & answers in the template.
+- Availability of GUI OMR editor as a cloud client.
+- Provide JSON rules to perform OMR answer grading.
+- Clip an area of interest from an image, save it as JPEG & perform OMR on it.
+- Perform highly accurate optical mark recognition (OMR).
+
+## Save OMR As
+CSV
+
+## Read OMR Formats
+JPEG, PNG, BMP, TIFF, PDF
 ## How to use the SDK?
 
 Our API is completely independent of your operating system, database system, or development language. You can use any language and platform that supports HTTP to interact with our API. However, manually writing client code can be difficult, error-prone, and time-consuming. Therefore, we have provided and support [SDKs](https://github.com/aspose-omr-cloud) in many development languages to make it easier to integrate with us.
@@ -51,7 +71,7 @@ Make your solution using [SDK](https://github.com/aspose-omr-cloud), follow thes
 
 #### 1. Clone from Github
 
-Clone the solution using the command: 
+Clone the solution using the command:
 ```sh
 git clone git@github.com:aspose-omr-cloud/aspose-omr-cloud-python.git --recurse-submodules
 ```
@@ -68,7 +88,7 @@ Install `aspose-omr-cloud` with [PIP](https://pypi.org/project/pip/) from [PyPI]
 pip install aspose-omr-cloud
 ```
 
-Or clone repository and install it via [Setuptools](http://pypi.python.org/pypi/setuptools): 
+Or clone repository and install it via [Setuptools](http://pypi.python.org/pypi/setuptools):
 
 ```sh
 python setup.py install
@@ -76,11 +96,11 @@ python setup.py install
 
 #### 4. Run Demo
 
-  * Checkout the SDK or get from PyPi 
+  * Checkout the SDK or get from PyPi
   * Set Your AppSid & AppKey
   * Run `run_demo.py`
- 
---------------------------- 
+
+---------------------------
 
 ### Structure
 
@@ -120,15 +140,11 @@ Class | Method | HTTP request | Description
 
 Library uses OAUTH2 internally
 
-## Author
+## Aspose.OMR Cloud SDKs in Popular Languages
 
-Aspose Pty Ltd (https://www.aspose.com)
+| .NET | Java | PHP | Python | Ruby | Node.js |
+|---|---|---|---|---|---|
+| [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-dotnet) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-java) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-php) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-python) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-ruby)  | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-node) |
+| [NuGet](https://www.nuget.org/packages/Aspose.omr-Cloud/) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-omr-cloud) | [Composer](https://packagist.org/packages/aspose/aspose-omr-cloud) | [PIP](https://pypi.org/project/aspose.omr-cloud/) | [GEM](https://rubygems.org/gems/aspose_omr_cloud)  | [NPM](https://www.npmjs.com/package/aspose-omr-cloud) |
 
-## Resources
-
-+ **Website:** [www.aspose.com](https://www.aspose.com/)
-+ **Product Home:** [Aspose.OMR for Cloud](https://products.aspose.cloud/omr)
-+ **Documentation:** [Aspose.OMR for Cloud Documentation](https://docs.aspose.cloud/omr/)
-+ **Cloud Dashboard:** [Aspose Cloud](https://dashboard.aspose.cloud/)
-+ **Forum:** [Aspose.OMR for Cloud Forum](https://forum.aspose.cloud/c/omr)
-+ **PyPi:** [Aspose.OMR-Cloud](https://pypi.org/project/aspose-omr-cloud/)
+[Product Page](https://products.aspose.cloud/omr/python) | [Documentation](https://docs.aspose.cloud/display/omrcloud/Home) | [API Reference](https://apireference.aspose.cloud/omr/) | [Code Samples](https://github.com/aspose-omr-cloud/aspose-omr-cloud-python) | [Blog](https://blog.aspose.cloud/category/omr/) | [Free Support](https://forum.aspose.cloud/c/omr) | [Free Trial](https://dashboard.aspose.cloud/#/apps)|

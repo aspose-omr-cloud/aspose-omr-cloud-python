@@ -1,318 +1,219 @@
-# coding: utf-8
-# """Copyright
-# --------------------------------------------------------------------------------------------------------------------
-# <copyright company="Aspose" file="omr_demo.py">
-# Copyright (c) 2020 Aspose.OMR for Cloud
-# </copyright>
-# <summary>
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-# </summary>
-# --------------------------------------------------------------------------------------------------------------------
-# """
+"""
+ * Copyright (c) 2023 Aspose Pty Ltd. All Rights Reserved.
+ *
+ * Licensed under the MIT (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://github.com/aspose-omr-cloud/aspose-omr-cloud-dotnet/blob/master/LICENSE
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
+import time
 import base64
 import json
+import ntpath
 import os
+from msilib.schema import File
+from pathlib import Path
+from threading import Thread
 from warnings import warn
 
 import six
 
-import asposeomrcloud.apis.storage_api as storage_api
-from asposeomrcloud.configuration import Configuration
-from asposeomrcloud.apis.omr_api import OmrApi
-from asposeomrcloud.models import OmrFunctionParam
-
+from aspose_omr_cloud_sdk import GenerateTemplateApi, RecognizeTemplateApi, PageSettings, OmrGenerateTask, OMRResponse, \
+    ResponseStatusCode, OmrRecognizeTask, ApiClient, FileExtension
+from aspose_omr_cloud_sdk.configuration import Configuration
 from collections import OrderedDict
 
-# File with dictionary for configuration in JSON format
+
+# The configuration file in JSON format:
 # The config file should look like:
 # {
-#     "app_key"  : "xxx",
-#     "app_sid"   : "xxx-xxx-xxx-xxx-xxx",
-#     "base_path" : "https://api.aspose.cloud/v3.0",
-#     "data_folder" : "Data"
+#     "client_secret"  : "xxx",
+#	  "client_id"   : "xxx-xxx-xxx-xxx-xxx",
+#	  "base_path" : "Aspose.OMR Cloud URL",
+#	  "auth_url":"Aspose.OMR Cloud Authorization URL",
+#     "data_folder"   : "Data",
+#     "result_folder" : "Temp",
 # }
-# Provide your own app_key and app_sid, which you can receive by registering at Aspose Cloud Dashboard
-# https://dashboard.aspose.cloud/
+CONFIG_FILE_NAME = "test_config.json"
 
+# Declare an object to hold the parsed configuration data
+Config = dict()
 
-CONFIG = 'test_config.json'
-DEMO_DATA_SUBMODULE_NAME = 'demo-data'
-# Output path where all results are placed
-PATH_TO_OUTPUT = '.\\Temp'
-# Name of the folder where all images used in template generation are located
-LOGOS_FOLDER_NAME = 'Logos'
+# Name of the sub-module with demo data and the configuration file
+DEMO_DATA_SUBMODULE_NAME = "aspose-omr-cloud-demo-data"
 
-# Task file names
-TEMPLATE_NAME = 'Aspose_test'
-TEMPLATE_DST_NAME = TEMPLATE_NAME + '.txt'
-TEMPLATE_IMAGE_NAME = TEMPLATE_NAME + '.png'
-TEMPLATE_USER_IMAGES_NAMES = ['photo.jpg', 'scan.jpg']
+# File names for template sources, printable form, recognition pattern and results
+BASE_FILE_NAME = "Aspose_test"
+TEMPLATE_GENERATION_FILE_NAME = BASE_FILE_NAME + ".txt"
+TEMPLATE_IMAGE_NAME = BASE_FILE_NAME + ".jpg"
+OMR_FILE_NAME = BASE_FILE_NAME + ".omr"
+RESULT_FILE_NAME = BASE_FILE_NAME + ".csv"
 TEMPLATE_LOGOS_IMAGES_NAMES = ['logo1.jpg', 'logo2.png']
 
 
-def serialize_files(file_paths):
-    """
-    Serialize files to JSON object
-    :param file_paths: array of input file paths
-    :return: JSON string with serialized files
-    """
-    d = OrderedDict([('Files', [])])
-    for file_path in file_paths:
-        try:
-            with open(file_path, 'r+b') as f:
-                data = f.read()
+def generate_template(template_file_path, template_logos_images_names):
+    # Read the template source code
+    with open(template_file_path, 'r+b') as f:
+        image = base64.b64encode(f.read()).decode('utf-8')
 
-            encoded_data = str(base64.b64encode(data)) if six.PY2 else base64.b64encode(data).decode("ascii")
+    # Configure the page layout
+    settings = PageSettings(font_size=12, font_family="Segoe UI", font_style="Regular", paper_size="A4", bubble_color="Black", page_margin_left=210, orientation="Vertical", bubble_size="Normal", output_format="Png")
 
-            d['Files'].append(OrderedDict([('Name', os.path.split(file_path)[1]), ('Size', os.path.getsize(file_path)),
-                                           ('Data', encoded_data)]))
-        except (IOError, OSError, EOFError) as err:
-            text = "Can't read {} Reason: {} ".format(file_path, str(err))
-            warn(text)
-    return json.dumps(d, sort_keys=False, indent=4, separators=(', ', ': '))
-
-
-def deserialize_file(file_info, dst_path):
-    """
-    Deserialize single response file to the specified location
-    :param file_info: Response file to deserialize
-    :param dst_path: Destination folder path
-    :return: Path to deserialized file
-    """
-    if not os.path.exists(dst_path):
-        os.makedirs(dst_path)
-    dst_file_path = os.path.join(dst_path, file_info.name)
-    with open(dst_file_path, 'w+b') as f:
-        f.write(base64.b64decode(file_info.data))
-    print('File saved %s' % file_info.name)
-    return dst_file_path
+    # Load images used in the template
+    # images = dict()
+    if template_logos_images_names is not None:
+        case_list = {}
+        for logo_name in template_logos_images_names:
+            with open(os.path.join(DataFolder, logo_name), 'r+b') as f:
+                logo = base64.b64encode(f.read()).decode('utf-8')
+                name = ntpath.basename(logo_name)
+                item = {name, logo}
+            case_list[name] = logo
+    # images.update(case_list)
+    # Build request
+    task = OmrGenerateTask(image, settings, case_list)
+    kwargs = {"body":task};
+    # Put the request into queue
+    return GenerateTemplateApi.post_generate_template(**kwargs)
 
 
-def deserialize_files(files, dst_path):
-    """
-    Deserialize list of files to the specified location
-    :param files: List of response files
-    :param dst_path: Destination folder path
-    :return: Path to deserialized files
-    """
-    return [deserialize_file(file_info, dst_path) for file_info in files]
-
-
-def upload_file(storage_api, src_file, dst_path):
-    """
-    Upload files to the storage
-    :param src_file: Source file path
-    :param dst_path: Destination path
-    :return: None
-    """
-
-    # Upload file to storage
-    print('Uploading %s into %s' % (src_file, dst_path))
-    res = storage_api.upload_file(src_file, dst_path)
-    print('Success!!! Uploaded file: ', res.uploaded)
-
-
-def upload_demo_files(storage_api, data_dir_path):
-    """
-    Upload logo images used during template generation in a separate folder on cloud storage
-    :data_dir_path: Path to directory containing logo images
-    :return: None
-    """
-
-    response = storage_api.object_exists(path=str(LOGOS_FOLDER_NAME))
-    if not response.exists:
-        storage_api.create_folder(path=str(LOGOS_FOLDER_NAME))
-    for logo in TEMPLATE_LOGOS_IMAGES_NAMES:
-        dest_logo_path = '%s/%s' % (LOGOS_FOLDER_NAME, logo)
-        response = storage_api.object_exists(path=str(dest_logo_path))
-        if not response.exists:
-            upload_file(storage_api, dest_logo_path, os.path.join(data_dir_path, logo))
+def get_generation_result_by_id(template_id):
+    generationResult = OMRResponse()
+    while True:
+        kwargs = {"id": template_id};
+        generationResult = GenerateTemplateApi.get_generate_template(**kwargs)
+        if generationResult.response_status_code == "Ok":
+            break
+        elif generationResult.response_status_code == "Error":
+            raise Exception("Something went wrong ...", generationResult.Error)
         else:
-            print('File %s already exists' % dest_logo_path)
+            print("Please wait while we are processing your request...")
+            time.sleep(5)
+
+    return generationResult
 
 
-def generate_template(omr_api, storage_api, template_dst_name, logos_folder):
-    """
-        Generate new template based on provided text description
-        :param omr_api: OMR API Instance
-        :param template_file_path: Path to template text description
-        :param logos_folder: Name of the cloud folder with logo images
-        :return: Generation response
-    """
+def save_generation_result(generation_result, path):
+    if generation_result.error is None:
+        for result in generation_result.results:
+            name = BASE_FILE_NAME + "." + result.type.lower()
+            pathFile = os.path.join(path, name)
+            with open(os.path.join(pathFile), 'wb') as f:
+                f.write(base64.b64decode(result.data))
 
-    image_file_name = os.path.basename(template_dst_name)
-
-    # upload image on cloud
-    upload_file(storage_api, image_file_name, template_dst_name)
-
-    # provide function parameters
-    omr_params = OmrFunctionParam(function_param=json.dumps(dict(ExtraStoragePath=logos_folder)), additional_param='')
-    return omr_api.post_run_omr_task(image_file_name, "GenerateTemplate", omr_params)
+    else:
+        print("Error :", generation_result.Error.ToString())
 
 
-def recognize_image(omr_api, storage_api, template_id, image_path):
-    """
-        Runs mark recognition on image
-        :param omr_api: OMR API Instance
-        :param template_id: Template ID
-        :param image_path: Path to the image
-        :return: Recognition response
-    """
+def recognize_image(image_path, omr_file_path):
+    # Read the recognition pattern file
+    with open(omr_file_path, 'r+b') as f:
+        omrFile = base64.b64encode(f.read()).decode('utf-8')
 
-    image_file_name = os.path.basename(image_path)
+    # Set the recognition accuracy
+    # Lower value allow even the lightest marks to be recognized
+    # Higher value require a more solid fill and may cause pencil marks to be ignored
+    recognitionThreshold = 30
 
-    # upload image on cloud
-    upload_file(storage_api, image_file_name, image_path)
+    # Read the filled form
+    with open(image_path, 'r+b') as f:
+        image = base64.b64encode(f.read()).decode('utf-8')
+    images = [image]
 
-    # provide template id as function parameter
-    call_params = OmrFunctionParam(function_param=template_id, additional_param='')
+    # Build request
+    task = OmrRecognizeTask(images, omrFile, FileExtension.CSV, recognitionThreshold)
 
-    # call image recognition
-    result = omr_api.post_run_omr_task(image_file_name, 'RecognizeImage', call_params)
-    return result
-
-
-def validate_template(omr_api, storage_api, template_image_path, template_data_dir):
-    """
-        Helper function that combines correct_template and finalize_template calls
-        :param omr_api: OMR API Instance
-        :param template_image_path: Path to template image
-        :param template_data_dir: The folder where Template Data will be stored
-        :return: Template ID
-    """
-    # Save correction results and provide them to the template finalization
-    corrected_template_path = ''
-    res_cr = correct_template(omr_api, storage_api, template_image_path, template_data_dir)
-    if res_cr.error_code == 0:
-        for file_info in res_cr.payload.result.response_files:
-            response_file_local_path = deserialize_file(file_info, PATH_TO_OUTPUT)
-            if file_info.name.lower().endswith('.omrcr'):
-                corrected_template_path = response_file_local_path
-
-    # Finalize template
-    template_id = res_cr.payload.result.template_id
-    res_fin = finalize_template(omr_api, storage_api, template_id, corrected_template_path)
-    if res_fin.error_code == 0:
-        deserialize_files(res_fin.payload.result.response_files, PATH_TO_OUTPUT)
-    return template_id
+    # Put the request into queue
+    kwargs = {"body": task}
+    return RecognizeTemplateApi.post_recognize_template(**kwargs)
 
 
-def correct_template(omr_api, storage_api, template_image_path, template_data_dir):
-    """
-    Run template correction
-    :param omr_api: OMR API Instance
-    :param template_image_path: Path to template image
-    :param template_data_dir: Path to template data file (.omr)
-    :return: Correction response
-    """
+def get_recognition_result_by_id(template_id):
+    recognitionResult = OMRResponse()
+    while True:
+        kwargs = {"id": template_id}
+        recognitionResult = RecognizeTemplateApi.get_recognize_template(**kwargs)
+        if recognitionResult.response_status_code == "Ok":
+            break
+        elif recognitionResult.response_status_code == "Error":
+            raise Exception("Something went wrong ...", recognitionResult.error)
+        else:
+            print("Please wait while we are processing your request...")
+            time.sleep(5)
 
-    image_file_name = os.path.basename(template_image_path)
-
-    # upload template image
-    upload_file(storage_api, image_file_name, template_image_path)
-
-    # locate generated template file (.omr) and provide it's data as function parameter
-    template_data_path = os.path.join(template_data_dir, os.path.splitext(image_file_name)[0] + '.omr')
-    function_param = serialize_files([template_data_path])
-    call_params = OmrFunctionParam(function_param=function_param, additional_param='')
-
-    # call template correction
-    result = omr_api.post_run_omr_task(image_file_name, "CorrectTemplate", call_params)
-    return result
+    return recognitionResult
 
 
-def finalize_template(omr_api, storage_api, template_id, corrected_template_path):
-    """
-    Run template finalization
-    :param omr_api:  OMR API Instance
-    :param template_id: Template id received after template correction
-    :param corrected_template_path: Path to corrected template (.omrcr)
-    :return: Finalization response
-    """
-
-    template_file_name = os.path.basename(corrected_template_path)
-
-    # upload corrected template data on cloud
-    upload_file(storage_api, template_file_name, corrected_template_path)
-
-    # provide template id as function parameter
-    call_params = OmrFunctionParam(function_param=template_id, additional_param='')
-
-    # call template finalization
-    result = omr_api.post_run_omr_task(template_file_name, 'FinalizeTemplate', call_params)
-    return result
+def save_recognition_result(recognition_result, path):
+    if recognition_result.error is None:
+        with open(os.path.join(path), 'wb') as f:
+            f.write(base64.b64decode(recognition_result.results[0].data))
+    else:
+        print("Error :", recognition_result.Error.ToString())
 
 
-# Try to locate the config file
-config = dict()
-data_dir = ''
 curr_path = os.path.abspath(os.path.dirname(os.path.realpath(os.getcwd())))
-config_file_relative_path = os.path.join(DEMO_DATA_SUBMODULE_NAME, CONFIG)
-config_file_path = None
+config_file_relative_path = os.path.join(DEMO_DATA_SUBMODULE_NAME, CONFIG_FILE_NAME)
 
-# Parse config
 while curr_path != os.path.abspath(os.path.join(curr_path, os.pardir)) and not os.path.isfile(
         os.path.join(curr_path, config_file_relative_path)):
     curr_path = os.path.abspath(os.path.join(curr_path, os.pardir))
-if os.path.isfile(os.path.join(curr_path, config_file_relative_path)):
-    config_file_path = os.path.join(curr_path, config_file_relative_path)
-    with open(config_file_path) as f:
-        config = json.loads(f.read())
-else:
-    raise IOError("Can't find config file %s" % CONFIG)
+    if os.path.isfile(os.path.join(curr_path, config_file_relative_path)):
+        config_file_path = os.path.join(curr_path, config_file_relative_path)
+        with open(config_file_path) as f:
+            Config = json.loads(f.read())
+    else:
+        raise IOError("Can't find config file %s" % CONFIG_FILE_NAME)
 
-data_dir = os.path.join(os.path.dirname(config_file_path), config[u'data_folder'])
-if not os.path.isdir(data_dir):
-    raise IOError("Can't find folder with data %s" % data_dir)
+# Parse the configuration file
+    DataFolder = os.path.join(os.path.dirname(config_file_path), Config[u'data_folder'])
+    ResultFolder = os.path.join(os.path.dirname(config_file_path), Config[u'result_folder'])
+
+    configuration = Configuration(hostUrl = Config["base_path"],
+                                  authUrl = Config["auth_url"],
+                                  clientId = Config["client_id"],
+                                  clientSecret = Config["client_secret"])
+    apiClient = ApiClient(configuration= configuration)
+    # Create an instance of GenerateTemplateApi class
+    GenerateTemplateApi = GenerateTemplateApi(apiClient)
+
+    # Create an instance of RecognizeTemplateApi class
+    RecognizeTemplateApi = RecognizeTemplateApi(apiClient)
 
 
 def run_demo():
-
-    configuration = Configuration(apiKey=config.get('app_key'), appSid=config.get('app_sid'))
-
-    api = OmrApi(configuration)
-    storage = storage_api.StorageApi(configuration)
-
-    # Step 1: Upload demo files on cloud and Generate template
-    print("\t\tUploading demo files...")
-    upload_demo_files(storage, data_dir)
+    # STEP 1: Queue the template source file for generation
     print("\t\tGenerate template...")
-    res_gen = generate_template(api, storage, os.path.join(data_dir, TEMPLATE_DST_NAME), LOGOS_FOLDER_NAME)
-    if res_gen.error_code == 0:
-        deserialize_files(res_gen.payload.result.response_files, PATH_TO_OUTPUT)
+    templateId = generate_template(os.path.join(DataFolder, TEMPLATE_GENERATION_FILE_NAME),
+                                   TEMPLATE_LOGOS_IMAGES_NAMES)
 
-    # Step 2: Validate template
-    print("\t\tValidate template...")
-    template_id = validate_template(api, storage, os.path.join(PATH_TO_OUTPUT, TEMPLATE_IMAGE_NAME), PATH_TO_OUTPUT)
+    # STEP 2: Fetch generated printable form and recognition pattern
+    print("\t\tGet generation result by ID...")
+    generationResult = get_generation_result_by_id(templateId)
 
-    # Step 3: Recognize photos and scans
+    # STEP 3: Save the printable form and recognition pattern into result_folder
+    print("\t\tSave generation result...")
+    save_generation_result(generationResult, ResultFolder)
+
+    # STEP 4: Queue the scan / photo of the filled form for recognition
     print("\t\tRecognize image...")
-    for user_image in TEMPLATE_USER_IMAGES_NAMES:
-        res_rec = recognize_image(api, storage, template_id, os.path.join(data_dir, user_image))
-        if res_rec.error_code == 0:
-            result_file = deserialize_files(res_rec.payload.result.response_files, PATH_TO_OUTPUT)[0]
-            print('Result file %s' % result_file)
+    recognizeTemplateId = recognize_image(os.path.join(DataFolder, TEMPLATE_IMAGE_NAME),
+                                          os.path.join(ResultFolder, OMR_FILE_NAME))
 
+    # STEP 5: Fetch recognition results
+    print("\t\tGet recognition result by ID...")
+    recognitionResponse = get_recognition_result_by_id(recognizeTemplateId)
 
-
-
-
+    # STEP 6: Save the recognition results into result_folder
+    print("\t\tSave recognition result...")
+    save_recognition_result(recognitionResponse, os.path.join(ResultFolder, RESULT_FILE_NAME))

@@ -14,17 +14,10 @@
  * limitations under the License.
 """
 
-from __future__ import absolute_import, unicode_literals
-from demo.omr_demo import run_demo
+from __future__ import absolute_import
 
+# flake8: noqa
 
-def demo():
-    try:
-        run_demo()
-
-    except Exception as err:
-        print('Exception:', err)
-
-
-if __name__ == '__main__':
-    demo()
+# import apis into api package
+from aspose_omr_cloud_sdk.api.generate_template_api import GenerateTemplateApi
+from aspose_omr_cloud_sdk.api.recognize_template_api import RecognizeTemplateApi

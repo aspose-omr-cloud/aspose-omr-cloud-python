@@ -1,150 +1,138 @@
-![](https://img.shields.io/badge/api-v3.0-lightgrey) ![PyPI](https://img.shields.io/pypi/v/aspose-omr-cloud) ![PyPI - Format](https://img.shields.io/pypi/format/aspose-omr-cloud) ![PyPI - Downloads](https://img.shields.io/pypi/dm/aspose-omr-cloud) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aspose-omr-cloud) [![GitHub license](https://img.shields.io/github/license/aspose-omr-cloud/aspose-omr-cloud-python)](https://github.com/aspose-omr-cloud/aspose-omr-cloud-php/blob/master/LICENSE) ![GitHub last commit](https://img.shields.io/github/last-commit/Aspose-omr-Cloud/aspose-omr-cloud-python)
+# Aspose.OMR Cloud SDK for Python
 
-# Python REST API for OMR Processing
-[Aspose.OMR for Cloud](https://products.aspose.cloud/omr/) is a REST API that helps you to perform optical mark recognition in the cloud. We provide a series of [SDKs](https://github.com/aspose-omr-cloud). Along with that, you can get [binaries](https://github.com/aspose-omr-cloud/aspose-omr-cloud-dotnet/releases) to start working immediately and recognize various OMR forms.
+**Aspose.OMR Cloud** is an easy-to-use and versatile online service for designing, rendering and recognizing hand-filled answer sheets, exam papers, surveys, ballots, and similar forms. With it, you can quickly develop cross-platform Python applications for optical mark recognition (OMR) that require minimal resources on the client side.
 
-Developers can embed [optical recognition](https://en.wikipedia.org/wiki/Optical_mark_recognition) in any type of application to extract data from images of tests, exams, questionnaires, surveys, etc. In the repository you can find examples on how to start using [Aspose.OMR API](https://docs.aspose.cloud/omr/omr-api-specification/) in your project.
+This software development kit (SDK) simplifies the interaction with Aspose.OMR Cloud services, allowing you to focus on business logic rather than the technical details. It handles all the routine operations such as establishing connections, sending API requests, and parsing responses, wrapping all these tasks into a few simple methods that can be used from Python code.
 
-## OMR Processing Features
+## Contents of this package
 
-- Perform recognition of scanned photos and images for OMR operations.
-- Ability to perform OMR on rotated & perspective (within 25 deg) photos.
-- Extract & recognize human-marked data from scanned tests, exams, surveys, etc.
-- Supports the export of OMR results to CSV file format.
-- Use textual markup to generate OMR templates, generate surveys, and test sheets.
-- Availability of GUI application for managing OMR templates.
-- Specify the number of OMR based questions & answers in the template.
-- Availability of GUI OMR editor as a cloud client.
-- Provide JSON rules to perform OMR answer grading.
-- Clip an area of interest from an image, save it as JPEG & perform OMR on it.
-- Perform highly accurate optical mark recognition (OMR).
+The repository contains:
 
-## Save OMR As
-CSV
+- Aspose.OMR Cloud SDK for Python
+- Demo workbook - a simple Python workbook that demonstrates how to use Aspose.OMR Cloud SDK for Python for generating and recognizing OMR forms.
+- Demo data (_aspose-omr-cloud-demo-data_):
+    - Configuration file (_aspose-omr-cloud-demo-data/test_config.json_);
+    - Source code of the questionnaire, associated images, and a scanned image of the filled questionnaire for recognition test (_aspose-omr-cloud-demo-data/Data_);
+    - The directory for storing a generated printable form, recognition pattern (.OMR) file, and recognition results (_aspose-omr-cloud-demo-data/Temp_).
 
-## Read OMR Formats
-JPEG, PNG, BMP, TIFF, PDF
-## How to use the SDK?
+## Licensing
 
-Our API is completely independent of your operating system, database system, or development language. You can use any language and platform that supports HTTP to interact with our API. However, manually writing client code can be difficult, error-prone, and time-consuming. Therefore, we have provided and support [SDKs](https://github.com/aspose-omr-cloud) in many development languages to make it easier to integrate with us.
+Aspose.OMR Cloud SDK for Python, demo workbook, documentation, and form templates are distributed under [MIT License](https://opensource.org/licenses/MIT).
 
-## Examples
+## Prerequisites
 
-```python
-import asposeomrcloud.apis.storage_api as storage_api
-from asposeomrcloud.configuration import Configuration
-from asposeomrcloud.apis.omr_api import OmrApi
-from asposeomrcloud.models import OmrFunctionParam
+- Python 2.7
+- Python 3.4 and later
 
-def run_demo():
+## Third party dependencies
 
-    configuration = Configuration(apiKey=config.get('app_key'), appSid=config.get('app_sid'))
+- certifi 14.05.14 and later
+- six 1.10 and later
+- python_dateutil 2.5.3 and later
+- setuptools 21.0.0 and later
+- urllib3 1.15.1 and later
 
-    api = OmrApi(configuration)
-    storage = storage_api.StorageApi(configuration)
+## Authorization
 
-    # Step 1: Upload demo files on cloud and Generate template
-    print("\t\tUploading demo files...")
-    upload_demo_files(storage, data_dir)
-    print("\t\tGenerate template...")
-    res_gen = generate_template(api, storage, os.path.join(data_dir, TEMPLATE_DST_NAME), LOGOS_FOLDER_NAME)
-    if res_gen.error_code == 0:
-        deserialize_files(res_gen.payload.result.response_files, PATH_TO_OUTPUT)
+Aspose.OMR Cloud follows industry standards and best practices to keep your data secure. All communication with OCR REST API is done using JWT authentication, which provides an open-standard, highly secure way to exchange information. Time-limited JWT tokens are generated using _Client ID_ and _Client Secret_ credentials that are specific for each application.
 
-    # Step 2: Validate template
-    print("\t\tValidate template...")
-    template_id = validate_template(api, storage, os.path.join(PATH_TO_OUTPUT, TEMPLATE_IMAGE_NAME), PATH_TO_OUTPUT)
+1. Sign in to [Aspose Cloud API Dashboard](https://dashboard.aspose.cloud/).
+2. Go to **Applications** page.
+3. Create the storage for exchanging files by clicking the plus icon and following the required steps. You can either use your own cloud storage, create a new storage in our cloud, or reuse the existing one.
+4. Give the application an easily recognizable name so it can be quickly found in a long list.
+5. Click **Save** button.
+6. Click the newly created application and copy the values from **Client Id** and **Client Secret** fields.
 
-    # Step 3: Recognize photos and scans
-    print("\t\tRecognize image...")
-    for user_image in TEMPLATE_USER_IMAGES_NAMES:
-        res_rec = recognize_image(api, storage, template_id, os.path.join(data_dir, user_image))
-        if res_rec.error_code == 0:
-            result_file = deserialize_files(res_rec.payload.result.response_files, PATH_TO_OUTPUT)[0]
-            print('Result file %s' % result_file)
-```
-_________________________
+## Installation and usage
 
+1. Clone or download the repository.
+2. Run the demo workbook.
 
-## Quickstart
-Make your solution using [SDK](https://github.com/aspose-omr-cloud), follow these steps:
+The demo workbook generates a printable OMR-ready form (_aspose-omr-cloud-demo-data/Temp/Aspose_test.png_) along with the recognition pattern file (_aspose-omr-cloud-demo-data/Temp/Aspose_test.omr_). The latter is used by Aspose.OMR recognition engine to match filled bubbles with template fields.
 
-#### 1. Clone from Github
+Then it recognizes the scanned image of the filled questionnaire and saves results in _aspose-omr-cloud-demo-data/Temp/Aspose_test.csv_ file.
 
-Clone the solution using the command:
-```sh
-git clone git@github.com:aspose-omr-cloud/aspose-omr-cloud-python.git --recurse-submodules
-```
+### Configuring
 
-#### 2. Get API keys if you haven't
+The configuration file (_aspose-omr-cloud-demo-data/test_config.json_) contains the basic parameters for working with Aspose.OMR Cloud.
 
-Make a personal account on [Aspose Cloud Dashboard](https://dashboard.aspose.cloud/#/) and click _Get Keys_. These keys are useful for all OMR Cloud products. If you have any trouble, look at this [detailed manual](https://docs.aspose.cloud/omr/quickstart/).
+- **client_secret** - the value from **Client Secret** field of the application (see _Authorization_).
+- **client_id** - the value from **Client Id** field of the application (see _Authorization_).
+- **base_path** - root URL of Aspose.OMR Cloud service.
+- **data_directory** - path to the directory with the source code of the questionnaire, associated images and scanned images of the filled questionnaires. Specify the path relative to the configuration file.
+- **result_directory** - path to the directory for storing a generated printable form, recognition pattern and recognition results. Specify the path relative to the configuration file.
 
-#### 3. Install SDK
+## How it works?
 
-Install `aspose-omr-cloud` with [PIP](https://pypi.org/project/pip/) from [PyPI](https://pypi.org/) by:
+Aspose.OMR Cloud supports end-to-end OMR process - from designing a form to recognizing its filled hardcopies. The workflow includes the following stages:
 
-```sh
-pip install aspose-omr-cloud
-```
+![Stages of the OMR process](https://releases.aspose.com/images/aspose/aspose_omr_cloud_stages.png)
 
-Or clone repository and install it via [Setuptools](http://pypi.python.org/pypi/setuptools):
+All resource-consuming tasks (generation and recognition of OMR forms) are done in the cloud, freeing up resources on the end user's device. All cloud tasks are queued, which prevents multiple simultaneous requests from interfering with each other and consuming too much processor time.
 
-```sh
-python setup.py install
-```
+Aspose.OMR Cloud SDK for Python implements wrapper classes that allow you to interact with the Aspose.OMR Cloud REST API without writing low-level HTTP requests and parsing responses. The demo project source code contains extensive comments on all major parts of the code, so you can easily understand the basics without having to consult the SDK reference documentation.
 
-#### 4. Run Demo
+### Generating a printable form
 
-  * Checkout the SDK or get from PyPi
-  * Set Your AppSid & AppKey
-  * Run `run_demo.py`
+To generate a printable form and a recognition pattern file, send the form sources and page configuration to the Aspose.OMR Cloud queue and get the results a few seconds later.
 
----------------------------
+The processing time can vary from a few milliseconds to a couple of seconds, depending on the current load of the Aspose.OMR Cloud service.
 
-### Structure
+#### GenerateTemplateApi
 
-This project includes:
+This class contains wrapper methods for generating the printable form from the source code and working with the form generation queue.
 
-- Module "asposeomrcloud", this is SDK. You can integrate it in your application. It contains both `Omr` and `Storage` `API`
-- Module "demo". Sample API requests.
-- Module "test", unittests. You can take a look at them to see various code examples.
+#### OmrGenerateTask
 
-### Dependencies
-- See requirements.txt
+This class allows you to prepare a request for sending the form source code, associated images, and page layout to the generation queue.
 
-## Versions support:
-- Python :: 3.6
-- Python :: 3.7
-- Python :: 3.8
-- Python :: 3.9
+##### Page layout
 
-_________________________
+The paper size, orientation, font, and other layout settings are configured through `PageSettings` object which is passed to the `OmrGenerateTask` constructor.
 
-## OMR Cloud SDKs
+##### Working with images
 
-||||||||
-|--------------|----------|-------|-------|-------|---------|---------|
-|[.NET](https://github.com/aspose-omr-cloud/aspose-omr-cloud-dotnet)|[Java](https://github.com/aspose-omr-cloud/aspose-omr-cloud-java)|[PHP](https://github.com/aspose-omr-cloud/aspose-omr-cloud-php)|[Ruby](https://github.com/aspose-omr-cloud/aspose-omr-cloud-ruby)|[Python](https://github.com/aspose-omr-cloud/aspose-omr-cloud-python)|[Node.js](https://github.com/aspose-omr-cloud/aspose-omr-cloud-nodejs)|[Perl](https://github.com/aspose-omr-cloud/aspose-omr-cloud-perl)
+Aspose.OMR Cloud allows you to customize forms by adding images (such as your company logo) to them. In addition to describing the image element in the form's source code, each image file must be directly submitted to the generation queue.
 
-## Documentation for API Endpoints
+Images are provided to the `OmrGenerateTask` constructor as a [`Dictionary<string, byte[]>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2) object, where the key contains the image file name, and the value contains the contents of the image file as an array of bytes.
 
-All URIs are relative to *https://api.aspose.cloud/v3.0*
+#### OMRResponse
 
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*OmrApi* | **post_run_omr_task** | **POST** /omr/{name}/runOmrTask | Run specific OMR task
+Depending on the request type, this class contains:
 
+- The current state of the queued form generation request, along with the printable OMR form and recognition pattern file, if the form has been generated.
+- The current state of the queued form recognition request, along with recognition results, if the form has been recognized.
 
-## Authentication
+### Recognizing a filled form
 
-Library uses OAUTH2 internally
+To recognize the filled form, send its scanned image or photo along with the recognition pattern file to the Aspose.OMR Cloud queue and get the results a few seconds later.
 
-## Aspose.OMR Cloud SDKs in Popular Languages
+The processing time can vary from a few milliseconds to a couple of seconds, depending on the current load of the Aspose.OMR Cloud service.
 
-| .NET | Java | PHP | Python | Ruby | Node.js |
-|---|---|---|---|---|---|
-| [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-dotnet) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-java) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-php) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-python) | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-ruby)  | [GitHub](https://github.com/aspose-omr-cloud/aspose-omr-cloud-node) |
-| [NuGet](https://www.nuget.org/packages/Aspose.omr-Cloud/) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-omr-cloud) | [Composer](https://packagist.org/packages/aspose/aspose-omr-cloud) | [PIP](https://pypi.org/project/aspose.omr-cloud/) | [GEM](https://rubygems.org/gems/aspose_omr_cloud)  | [NPM](https://www.npmjs.com/package/aspose-omr-cloud) |
+#### RecognizeTemplateApi
 
-[Product Page](https://products.aspose.cloud/omr/python) | [Documentation](https://docs.aspose.cloud/display/omrcloud/Home) | [API Reference](https://apireference.aspose.cloud/omr/) | [Code Samples](https://github.com/aspose-omr-cloud/aspose-omr-cloud-python) | [Blog](https://blog.aspose.cloud/category/omr/) | [Free Support](https://forum.aspose.cloud/c/omr) | [Free Trial](https://dashboard.aspose.cloud/#/apps)|
+This class contains wrapper methods for recognizing the scanned or photographed form and working with the form recognition queue.
+
+#### OmrRecognizeTask
+
+This class allows you to prepare a request for sending the form image to the recognition queue.
+
+The form must be accompanied by the recognition pattern (.OMR) file, which tells Aspose.OMR recognition engine how to match filled bubbles with template fields. Please note that the recognition template file must be taken from the same generation response as the printable form, otherwise the recognition results are not guaranteed to be correct.
+
+##### Recognition accuracy threshold
+
+A respondent can fill out the form with a pen, pencil or marker, and use various marks inside the bubbles - from a solid fill to small crosses or checks.
+
+Recognition accuracy threshold (`recognitionThreshold`) parameter determines how marks are processed during recognition. You can provide a value from 0 to 100. Lower values allow even the lightest marks to be recognized, but may cause dirt or paper defects to be treated as marks. Higher values require a more solid fill and may cause pencil marks or small checkmarks to be ignored.
+
+![Recognition accuracy threshold](https://releases.aspose.com/images/aspose/aspose_omr_recognition_threshold.png)
+
+**Important:** Instruct respondents to use the same type of marks for all bubbles. Otherwise, recognition results may be inaccurate. If you plan to use your smartphone's camera instead of a scanner, we recommend a solid fill with a pen or marker.
+
+## Resources
+
+- [Aspose.OMR Cloud product family](https://products.aspose.cloud/omr/family/)
+- [Technical documentation](https://docs.aspose.cloud/omr/)
+- [Aspose.OMR Cloud API Reference](https://apireference.aspose.cloud/omr/)
+- [Free Support Forum](https://forum.aspose.cloud/c/omr/8)
+- [Other SDKs](https://github.com/aspose-omr-cloud)
